@@ -1,0 +1,9 @@
+<h1>Leaderboard</h1>
+<table>
+  <% scores.forEach(score => { %>
+    <tr>
+      <td><%= score.playerName %></td>
+      <td><%= score.points %></td>
+    </tr>
+  <% }) %>
+</table>
