@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 
-const PlayerSchema = new mongoose.Schema({
-  playerName: {
-    type: String,
-    required: true,
+const playerSchema = new mongoose.Schema({
+  playerName: { 
+    type: String, 
+    required: true, 
     unique: true,
     trim: true
   },
   avatar: {
     type: String,
-    default: ''
+    default: 'default-avatar.png'
   },
   createdAt: {
     type: Date,
@@ -17,4 +17,4 @@ const PlayerSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Player', PlayerSchema);
+module.exports = mongoose.model('Player', playerSchema);
