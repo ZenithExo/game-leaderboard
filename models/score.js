@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ScoreSchema = new mongoose.Schema({
+const scoreSchema = new mongoose.Schema({
   player: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Player',
@@ -8,7 +8,8 @@ const ScoreSchema = new mongoose.Schema({
   },
   game: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   score: {
     type: Number,
@@ -21,6 +22,6 @@ const ScoreSchema = new mongoose.Schema({
 });
 
 // Index for faster leaderboard queries
-ScoreSchema.index({ game: 1, score: -1 });
+scoreSchema.index({ game: 1, score: -1 });
 
-module.exports = mongoose.model('Score', ScoreSchema);
+module.exports = mongoose.model('Score', scoreSchema);
