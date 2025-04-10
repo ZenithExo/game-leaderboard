@@ -4,10 +4,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const connectDB = require('./config/db');
 
-// Initialize Express app
 const app = express();
 
-// Connect to MongoDB
+// DB connection
 connectDB();
 
 // Middleware
@@ -18,14 +17,14 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api', require('./routes/leaderboardRoutes'));
 
-// Error handling middleware
+// Error middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error('Internal error:', err.message);
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
-// Start server
+// Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`✅ Server running on http://localhost:${PORT}`);
 });
