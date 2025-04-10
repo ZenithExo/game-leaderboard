@@ -2,15 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/style.css">
+  <title>Gamification App</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <%- include('../partials/header') %>
-  <div class="container">
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/leaderboard">Leaderboard</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+  </nav>
+  <main>
     <%- body %>
-  </div>
-  <%- include('../partials/footer') %>
+  </main>
   <script src="/js/script.js"></script>
 </body>
 </html>
