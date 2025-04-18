@@ -1,30 +1,30 @@
 require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
 const connectDB = require('./config/db');
+const path = require('path');
 
 const app = express();
 
-// DB connection
+// Connect Database
 connectDB();
 
 // Middleware
-app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static('public'));
+
+// Set EJS as templating engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // Routes
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api', require('./routes/leaderboardRoutes'));
+app.use('/auth', require('./routes/authRoutes'));
+app.use('/leaderboard', require('./routes/leaderboardRoutes'));
 
-// Error middleware
-app.use((err, req, res, next) => {
-  console.error('Internal error:', err.message);
-  res.status(500).json({ error: 'Something went wrong!' });
+// Home route
+app.get('/', (req, res) => {
+    res.render('index');
 });
 
-// Server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
