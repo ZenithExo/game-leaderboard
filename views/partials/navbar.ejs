@@ -1,0 +1,26 @@
+I <nav class="navbar">
+    <div class="nav-left">
+        <a href="/" class="logo">GAMINGCORE</a>
+    </div>
+    <div class="nav-center">
+        <a href="/">Home</a>
+        <a href="/leaderboard">Leaderboard</a>
+        <% if (user) { %>
+            <a href="/profile">Profile</a>
+        <% } else { %>
+            <a href="/login">Login</a>
+        <% } %>
+    </div>
+    <div class="nav-right">
+        <% if (user) { %>
+            <a href="/profile">
+                <img src="<%= user.avatar || 'https://i.pinimg.com/736x/2e/4e/32/2e4e325e91cdd85b86ae78dace760ecd.jpg' %>" 
+                     alt="Profile" 
+                     class="nav-profile-pic">
+            </a>
+            <a href="/logout" class="logout-link">Logout</a>
+        <% } else { %>
+            <a href="/login" class="login-link">Sign In</a>
+        <% } %>
+    </div>
+</nav>

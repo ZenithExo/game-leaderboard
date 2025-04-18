@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAMINGCORE - Login</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <%- include('partials/navbar') %>
+</head>
+<body>
+    <div class="login-container">
+        <img src="https://i.pinimg.com/736x/2e/4e/32/2e4e325e91cdd85b86ae78dace760ecd.jpg" class="login-logo" alt="Logo">
+
+        <form action="/login" method="POST">
+            <% if (error) { %>
+                <div class="error-message"><%= error %></div>
+            <% } %>
+
+            <div class="login-input">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="<%= email || '' %>" required>
+            </div>
+
+            <div class="login-input">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+
+        <p class="forgot-password">Forgot Password?</p>
+
+        <p class="sign-up">
+            Don't have an account? <a href="/register">Sign Up</a>
+        </p>
+    </div>
+</body>
+</html>
