@@ -1,21 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Leaderboard</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Top Players</h1>
-        <div class="leaderboard">
-            <% users.forEach((user, index) => { %>
-                <div class="player-row">
-                    <span class="rank">#<%= index + 1 %></span>
-                    <span class="username"><%= user.username %></span>
-                    <span class="score"><%= user.score %></span>
-                </div>
-            <% }) %>
-        </div>
+<%- include('../layout/main') %>
+
+<div class="container">
+    <h1>Game Leaderboard</h1>
+    <div class="leaderboard">
+        <% players.forEach((player, index) => { %>
+            <div class="player-row">
+                <span class="rank">#<%= index + 1 %></span>
+                <span class="username"><%= player.username %></span>
+                <span class="score"><%= player.score %></span>
+            </div>
+        <% }) %>
     </div>
-</body>
-</html>
+
+    <div class="update-form">
+        <h2>Update Score</h2>
+        <form action="/leaderboard/update-score" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="number" name="score" placeholder="Score" required>
+            <button type="submit">Update Score</button>
+        </form>
+    </div>
+</div>

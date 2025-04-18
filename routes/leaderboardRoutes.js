@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { getLeaderboard, updateScore } = require('../controllers/leaderboardController');
+const leaderboardController = require('../controllers/leaderboardController');
 
-router.get('/', getLeaderboard);
-router.post('/update-score', updateScore);
+router.get('/', leaderboardController.getLeaderboard);
+router.post('/update-score', leaderboardController.updateScore);
 
 module.exports = router;
