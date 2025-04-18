@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | GAMINGCORE</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .error-container {
+            text-align: center;
+            padding: 5rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #3498db, #9b59b6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+        .error-message {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #ecf0f1;
+        }
+        .error-description {
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: #bdc3c7;
+            line-height: 1.6;
+        }
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .error-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .error-btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+        .error-btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        .error-btn-secondary {
+            background-color: #2c3e50;
+            color: white;
+        }
+        .error-btn-secondary:hover {
+            background-color: #1a252f;
+            transform: translateY(-2px);
+        }
+        .pixel-character {
+            margin: 2rem auto;
+            width: 150px;
+            height: 150px;
+            background-image: url('https://i.pinimg.com/originals/0e/4b/fd/0e4bfdf5a7fdb5d9b5a3c8e5a7f254a0.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            image-rendering: pixelated;
+        }
+    </style>
+</head>
+<body class="dark-theme">
+    <%- include('partials/navbar') %>
+
+    <div class="error-container">
+        <div class="pixel-character"></div>
+        <div class="error-code">404</div>
+        <h1 class="error-message">Level Not Found</h1>
+        <p class="error-description">
+            The page you're looking for has either been deleted, moved, or never existed.
+            <br>
+            Maybe you took a wrong turn in the dungeon? Let's get you back to safety.
+        </p>
+        <div class="error-actions">
+            <a href="/" class="error-btn error-btn-primary">
+                <i class="fas fa-home"></i> Return Home
+            </a>
+            <a href="/leaderboard" class="error-btn error-btn-secondary">
+                <i class="fas fa-trophy"></i> View Leaderboard
+            </a>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

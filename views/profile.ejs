@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAMINGCORE - Profile</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .online { color: #2ecc71; }
+        .offline { color: #95a5a6; }
+        .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+        .status-dot.online { background-color: #2ecc71; }
+        .status-dot.offline { background-color: #95a5a6; }
+    </style>
+</head>
+<body class="dark-theme">
+    <%- include('partials/navbar') %>
+
+    <div class="profile-main">
+        <div class="profile-header">
+            <img src="<%= user.avatar || 'https://i.pinimg.com/736x/d0/71/13/d0711346830aa8621089c1f353686318.jpg' %>" 
+                 alt="Profile" 
+                 class="profile-avatar">
+            <div class="profile-info">
+                <h1>BLΔZΞ</h1>
+                <span class="profile-status">Level 31 · Currently Offline</span>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <div class="achievement-showcase">
+                <h2>Achievement Showcase</h2>
+                <div class="achievement-letters">
+                    <span>B</span>
+                    <span>L</span>
+                    <span>Δ</span>
+                    <span>Z</span>
+                    <span>Ξ</span>
+                </div>
+                <div class="achievement-stats">
+                    <div class="stat-box">
+                        <h3>3,382</h3>
+                        <p>Achievements</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3>24</h3>
+                        <p>Perfect Games</p>
+                    </div>
+                    <div class="stat-box">
+                        <h3>49%</h3>
+                        <p>Completion Rate</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recent-games">
+                <h2>Recent Games</h2>
+                <div class="games-grid">
+                    <div class="game-card">
+                        <img src="https://wp-uploads.qualbert.com/2022/05/MGR-Retrospective.png" alt="Metal Gear Rising Revengence">
+                        <div class="game-info">
+                            <h3>Metal Gear Rising Revengence</h3>
+                            <p>61 hours played</p>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg" alt="Cyberpunk 2077">
+                        <div class="game-info">
+                            <h3>Cyberpunk 2077</h3>
+                            <p>45 hours played</p>
+                        </div>
+                    </div>
+                    <div class="game-card">
+                        <img src="https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/4xJ8XB3bi888QTLZYdl7Oi0s.png" alt="God of War">
+                        <div class="game-info">
+                            <h3>God of War</h3>
+                            <p>30 hours played</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="completionist-showcase">
+                <h2>Completionist Showcase</h2>
+                <div class="completed-games">
+                    <div class="completed-game">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/header.jpg" alt="Red Dead Redemption 2">
+                        <p>100%</p>
+                    </div>
+                    <div class="completed-game">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/header.jpg" alt="Cyberpunk 2077">
+                        <p>100%</p>
+                    </div>
+                    <div class="completed-game">
+                        <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/814380/header.jpg" alt="Sekiro">
+                        <p>100%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="friends-section">
+                <h2>Friends (63)</h2>
+                <div class="friends-grid">
+                    <!-- Friend 1-5 -->
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/236x/ee/f0/7d/eef07d19e76a3362102a0ce483d687a9.jpg" alt="Tomie">
+                        <p>Tomie</p>
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://cdn.donmai.us/sample/c1/78/__yumemizuki_mizuki_genshin_impact_drawn_by_rei_sss35_ss3__sample-c178d6c1f50208d8f25407a9933308a1.jpg" alt="MizukiYume">
+                        <p>MizukiYume</p>
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://cdna.artstation.com/p/assets/images/images/039/375/816/smaller_square/arno-sen-zhongli-morax.jpg?1625720437" alt="Morax">
+                        <p>Morax</p>
+                        <span class="status-dot offline"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/736x/94/b9/13/94b91344f1cc16120c9eaee3ed1f403f.jpg" alt="AstralCaelus">
+                        <p>AstralCaelus</p>
+                        <span class="status-dot offline"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://creator.nightcafe.studio/jobs/nA6VTJhwsehDyTRL1SP0/nA6VTJhwsehDyTRL1SP0--1--t2yln.jpg" alt="MetalBunny">
+                        <p>MetalBunny</p>
+                        <span class="status-dot offline"></span>
+                    </div>
+
+                    <!-- Friend 6-10 -->
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/736x/b1/94/74/b1947450a6a5f8eacdd349f0c99b2698.jpg" alt="Kailani">
+                        <p>Kailani</p>
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/564x/93/b1/60/93b1603a2aec83b95dee74c024d94901.jpg" alt="Komenos">
+                        <p>Komenos</p>
+                        <span class="status-dot offline"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/736x/31/ff/88/31ff8833ccd8ebfbfa0c0ffda971893d.jpg" alt="Jimmymk">
+                        <p>Jimmymk</p>
+                        <span class="status-dot offline"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/originals/cf/03/b6/cf03b62a5e9a934e1ab635b3efc81d29.jpg" alt="Ravi">
+                        <p>Ravi</p>
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/736x/4a/78/db/4a78db692c7b09bf23e3dd31c28da64d.jpg" alt="ZaniTime">
+                        <p>ZaniTime</p>
+                        <span class="status-dot online"></span>
+                    </div>
+
+                    <!-- Friend 11-15 -->
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/736x/fa/51/fa/fa51fafec3c3ee114cf6c18abbeab554.jpg" alt="AstraRobin">
+                        <p>AstraRobin</p>
+                        <span class="status-dot offline"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/736x/f8/82/6a/f8826ad5a35d7eac6e9663e5c32c65b3.jpg" alt="S.Rover">
+                        <p>S.Rover</p>
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/736x/e6/51/04/e65104d36970c021075b844be00b9c5e.jpg" alt="Shorekeeper">
+                        <p>Shorekeeper</p>
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://media.tenor.com/FHnd2oHbc2oAAAAe/yinlin.png" alt="Yinlin">
+                        <p>Yinlin</p>
+                        <span class="status-dot offline"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/736x/6f/30/03/6f3003ce7be00063117223db8d04016b.jpg" alt="GenJiyan">
+                        <p>GenJiyan</p>
+                        <span class="status-dot offline"></span>
+                    </div>
+
+                    <!-- Friend 16-20 -->
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/236x/bf/5d/05/bf5d05409b5b509bb3e7a988bf89649b.jpg" alt="ChangliBurn">
+                        <p>ChangliBurn</p>
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://preview.redd.it/wuthering-waves-chibi-arts-by-v0-xwbss7w275rd1.png?width=640&crop=smart&auto=webp&s=676ff0b41bf549518927c1d5b88b934409991922" alt="SenitialJinshi">
+                        <p>SenitialJinshi</p>
+                        <span class="status-dot offline"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/736x/6f/30/03/6f3003ce7be00063117223db8d04016b.jpg" alt="Jue">
+                        <p>Jue</p>
+                        <span class="status-dot offline"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/236x/b1/98/c5/b198c58d5e7033e9e4beef1b67f25767.jpg" alt="Fiscila">
+                        <p>Fiscila</p>
+                        <span class="status-dot online"></span>
+                    </div>
+                    <div class="friend-card">
+                        <img src="https://preview.redd.it/post-lament-anthropocene-stars-intertwined-phoebe-v0-0fgl9hzzhwbe1.jpeg?width=850&format=pjpg&auto=webp&s=4b35634929f7341a33cdcd2874f585345329c085" alt="St.Phoebe">
+                        <p>St.Phoebe</p>
+                        <span class="status-dot offline"></span>
+                    </div>
+
+                    <!-- Friend 21 -->
+                    <div class="friend-card">
+                        <img src="https://i.pinimg.com/736x/3d/c0/fa/3dc0fa5e70ed41096a3e44bd5361f44a.jpg" alt="Phoenix">
+                        <p>Phoenix</p>
+                        <span class="status-dot offline"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

@@ -277,27 +277,27 @@ app.get('/', (req, res) => {
             <div class="friends-grid">
                 <div class="friend-item">
                     <img src="/images/friends/tennis.jpg" alt="Tennis" class="friend-avatar">
-                    <span class="friend-name">Tennis</span>
+                    <span class="friend-name">Tomie</span>
                 </div>
                 <div class="friend-item">
                     <img src="/images/friends/micak.jpg" alt="Micak/Yime" class="friend-avatar">
-                    <span class="friend-name">Micak/Yime</span>
+                    <span class="friend-name">Jimmymk</span>
                 </div>
                 <div class="friend-item">
                     <img src="/images/friends/phoenix.jpg" alt="Phoenix" class="friend-avatar">
-                    <span class="friend-name">Phoenix</span>
+                    <span class="friend-name">MetalBunny</span>
                 </div>
                 <div class="friend-item">
                     <img src="/images/friends/phoenix.jpg" alt="Phoenix" class="friend-avatar">
-                    <span class="friend-name">Phoenix</span>
+                    <span class="friend-name">Kailani</span>
                 </div>
                 <div class="friend-item">
                     <img src="/images/friends/phoenix.jpg" alt="Phoenix" class="friend-avatar">
-                    <span class="friend-name">Phoenix</span>
+                    <span class="friend-name">ChangliFlame</span>
                 </div>
                 <div class="friend-item">
                     <img src="/images/friends/phoenix.jpg" alt="Phoenix" class="friend-avatar">
-                    <span class="friend-name">Phoenix</span>
+                    <span class="friend-name"></span>
                 </div>
                 <div class="friend-item">
                     <img src="/images/friends/phoenix.jpg" alt="Phoenix" class="friend-avatar">
@@ -368,7 +368,7 @@ app.get('/', (req, res) => {
 });
 
 // Start the server with port fallback
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 }).on('error', (err) => {

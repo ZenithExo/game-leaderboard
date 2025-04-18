@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAMINGCORE - Home</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+
+    <div class="banner">
+        <div class="overlay">
+            <a href="/leaderboard">
+                <button class="banner-button leaderboard-button">View Leaderboard</button>
+            </a>
+            <a href="https://youtu.be/QdBZY2fkU-0?si=dI_a8GssBGkLuVXO" target="_blank" rel="noopener noreferrer">
+                <button class="banner-button trailer-button">See Trailer</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="hero">
+        <h3><b>Top Players This Week</b></h3>
+    </div>
+
+    <section class="featured-players">
+        <% if (featuredPlayers && featuredPlayers.length > 0) { %>
+            <% featuredPlayers.forEach(player => { %>
+                <div class="player-card">
+                    <img src="<%= player.avatar %>" alt="<%= player.username %>" class="player-avatar">
+                    <h2 class="player-name"><%= player.username %></h2>
+                    <p class="player-score">Score: <%= player.highScore %></p>
+                    <p class="player-game"><%= player.game.toUpperCase() %></p>
+                    <a href="/leaderboard" class="view-profile-button">View Profile</a>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p class="no-players">No featured players yet. Be the first!</p>
+        <% } %>
+    </section>
+
+    <div class="cta-section">
+        <h2>Ready to Compete?</h2>
+        <p>Join our gaming community and climb the leaderboard!</p>
+        <% if (user) { %>
+            <a href="/leaderboard" class="cta-button">Go to Leaderboard</a>
+        <% } else { %>
+            <a href="/register" class="cta-button">Sign Up Now</a>
+            <a href="/login" class="cta-button secondary">Login</a>
+        <% } %>
+    </div>
+
+    <%- include('partials/footer') %>
+</body>
+</html>
