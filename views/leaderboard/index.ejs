@@ -1,13 +1,12 @@
-<%- include('../layout/main') %>
-
 <div class="leaderboard">
     <% players.forEach((player, index) => { %>
-        <div class="player-row">
-            <span class="rank">#<%= index + 1 %></span>
-            <span class="username"><%= player.username %></span>
-            <span class="score"><%= player.score %></span>
-            <input type="number" id="score-<%= player._id %>" placeholder="New Score">
-            <button onclick="updateScore('<%= player._id %>')">Update</button>
-        </div>
+      <div class="player-row">
+        <span class="rank"><%= index + 1 %></span>
+        <span class="username"><%= player.username %></span>
+        <span class="score"><%= player.score %></span>
+        <input type="number" id="score-<%= player._id %>" placeholder="New Score">
+        <button onclick="updateScore('<%= player._id %>')">Update</button>
+      </div>
     <% }) %>
-</div>
+  </div>
+  
