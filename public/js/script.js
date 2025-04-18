@@ -1,7 +1,10 @@
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Client-side JS loaded');
-
-    fetch('/api/leaderboard')
-      .then(res => res.json())
-      .then(data => console.log(data));
-  });
+function updateScore(userId) {
+  const score = document.getElementById('score-' + userId).value;
+  fetch('/leaderboard/update-score', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userId, score })
+  }).then(() => window.location.reload());
+}

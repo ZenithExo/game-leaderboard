@@ -1,23 +1,13 @@
 <%- include('../layout/main') %>
 
-<div class="container">
-    <h1>Game Leaderboard</h1>
-    <div class="leaderboard">
-        <% players.forEach((player, index) => { %>
-            <div class="player-row">
-                <span class="rank">#<%= index + 1 %></span>
-                <span class="username"><%= player.username %></span>
-                <span class="score"><%= player.score %></span>
-            </div>
-        <% }) %>
-    </div>
-
-    <div class="update-form">
-        <h2>Update Score</h2>
-        <form action="/leaderboard/update-score" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="number" name="score" placeholder="Score" required>
-            <button type="submit">Update Score</button>
-        </form>
-    </div>
+<div class="leaderboard">
+    <% players.forEach((player, index) => { %>
+        <div class="player-row">
+            <span class="rank">#<%= index + 1 %></span>
+            <span class="username"><%= player.username %></span>
+            <span class="score"><%= player.score %></span>
+            <input type="number" id="score-<%= player._id %>" placeholder="New Score">
+            <button onclick="updateScore('<%= player._id %>')">Update</button>
+        </div>
+    <% }) %>
 </div>
