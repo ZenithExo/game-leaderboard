@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Leaderboard</title>
+    <title>Leaderboard</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Leaderboard</h1>
+        <h1>Top Players</h1>
         <div class="leaderboard">
-            <% players.forEach((player, index) => { %>
+            <% users.forEach((user, index) => { %>
                 <div class="player-row">
-                    <span class="rank"><%= index + 1 %></span>
-                    <span class="username"><%= player.username %></span>
-                    <span class="score"><%= player.score %></span>
+                    <span class="rank">#<%= index + 1 %></span>
+                    <span class="username"><%= user.username %></span>
+                    <span class="score"><%= user.score %></span>
                 </div>
-            <% }); %>
+            <% }) %>
         </div>
     </div>
-    <script src="/js/leaderboard.js"></script>
 </body>
 </html>

@@ -1,27 +1,23 @@
-const Player = require('../models/player');
+const User = require('../models/user');
 
 exports.getLeaderboard = async (req, res) => {
     try {
-        const players = await Player.find()
+        const users = await User.find()
             .sort({ score: -1 })
+            .select('username score')
             .limit(10);
-        
-        res.render('leaderboard', { players });
+        res.render('leaderboard', { users });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ error: 'Server error' });
     }
 };
 
 exports.updateScore = async (req, res) => {
     try {
-        const { playerId, score } = req.body;
-        const player = await Player.findByIdAndUpdate(
-            playerId,
-            { score },
-            { new: true }
-        );
-        res.json(player);
+        const { userId, score } = req.body;
+        await User.findByIdAndUpdate(userId, { score });
+        res.redirect('/leaderboard');
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(400).json({ error: 'Update failed' });
     }
 };

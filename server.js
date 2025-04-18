@@ -1,27 +1,25 @@
-require('dotenv').config();
 const express = require('express');
-const connectDB = require('./config/db');
+const mongoose = require('mongoose');
 const path = require('path');
+require('dotenv').config();
 
 const app = express();
 
-// Connect Database
-connectDB();
-
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
-
-// Set EJS as templating engine
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+
+// Database Connection
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.log(err));
 
 // Routes
 app.use('/auth', require('./routes/authRoutes'));
 app.use('/leaderboard', require('./routes/leaderboardRoutes'));
 
-// Home route
 app.get('/', (req, res) => {
     res.render('index');
 });
