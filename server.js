@@ -178,22 +178,33 @@ app.get('/profile', requireLogin, async (req, res) => {
     }
 });
 
-// Fixed Leaderboard Route
+// FINAL FIXED LEADERBOARD ROUTE
 app.get('/leaderboard', async (req, res) => {
     try {
-        const players = await User.find()
-            .sort({ score: -1 }) // Sort by score descending
-            .limit(100) // Top 100 players
-            .lean(); // Convert to plain JS objects
+        // Get top 100 players with only necessary fields
+        const players = await User.find({}, 'username avatar score')
+            .sort({ score: -1 })
+            .limit(100)
+            .lean();
+
+        // Prepare clean data for the view
+        const leaderboardData = players.map((player, index) => ({
+            rank: index + 1,
+            username: player.username || 'Anonymous',
+            avatar: player.avatar || '/images/default-avatar.png',
+            score: player.score || 0,
+            game: 'All' // Default game filter
+        }));
 
         res.render('leaderboard', {
-            players: players || [], // Ensure array exists
+            players: leaderboardData,
             currentUser: req.session.user || null,
             isLoggedIn: !!req.session.user,
             filters: {
                 games: ['All', 'Valorant', 'Call of Duty', 'Fortnite']
             }
         });
+
     } catch (err) {
         console.error('Leaderboard error:', err);
         res.status(500).render('500', {
@@ -214,6 +225,7 @@ app.post('/models/scores', requireLogin, async (req, res) => {
             score: parseInt(score) || 0
         });
 
+        // Update user's total score
         await User.findByIdAndUpdate(req.session.user.id, {
             $inc: { score: parseInt(score) || 0 }
         });
