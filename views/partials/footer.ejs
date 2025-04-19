@@ -1,8 +1,7 @@
-<!-- views/partials/footer.ejs -->
 <footer>
     <div class="container">
         <p>&copy; <%= new Date().getFullYear() %> Game Leaderboard</p>
-        <% if (isLoggedIn) { %>
+        <% if (locals.isLoggedIn) { %>
             <a href="/profile">View Profile</a>
         <% } %>
     </div>

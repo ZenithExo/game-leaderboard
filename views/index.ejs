@@ -3,55 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GAMINGCORE - Home</title>
+    <title>About Us - Gaming Core</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Basic layout styles */
+        .about-container, .team-section, .cta-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .team-member {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        /* Critical fallback styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .dark-theme {
+            background-color: #121212;
+            color: #ffffff;
+        }
+        .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<body>
-    <%- include('partials/navbar') %>
+<body class="dark-theme">
+    <%- include('partials/navbar', { 
+        user: locals.user || null,
+        isLoggedIn: locals.isLoggedIn || false 
+    }) %>
 
-    <div class="banner">
-        <div class="overlay">
-            <a href="/leaderboard">
-                <button class="banner-button leaderboard-button">View Leaderboard</button>
-            </a>
-            <a href="https://youtu.be/QdBZY2fkU-0?si=dI_a8GssBGkLuVXO" target="_blank" rel="noopener noreferrer">
-                <button class="banner-button trailer-button">See Trailer</button>
-            </a>
+    <main class="about-container">
+        <h1>About Gaming Core</h1>
+        <p>Welcome to Gaming Core - your ultimate destination for competitive gaming! We are passionate about bringing gamers the best leaderboard tracking and gaming community features. Whether you're a casual or competitive player, we've got you covered.</p>
+    </main>
+
+    <section class="team-section">
+        <div class="team-member">
+            <img src="/images/aditya.jpg" alt="Developer" 
+                 onerror="this.src='/images/default-avatar.jpg'">
+            <h3>Aditya Kumar Mishra</h3>
+            <p>Lead Developer</p>
         </div>
-    </div>
+    </section>
 
-    <div class="hero">
-        <h3><b>Top Players This Week</b></h3>
-    </div>
-
-    <section class="featured-players">
-        <% if (featuredPlayers && featuredPlayers.length > 0) { %>
-            <% featuredPlayers.forEach(player => { %>
-                <div class="player-card">
-                    <img src="<%= player.avatar %>" alt="<%= player.username %>" class="player-avatar">
-                    <h2 class="player-name"><%= player.username %></h2>
-                    <p class="player-score">Score: <%= player.highScore %></p>
-                    <p class="player-game"><%= player.game.toUpperCase() %></p>
-                    <a href="/leaderboard" class="view-profile-button">View Profile</a>
-                </div>
-            <% }) %>
+    <section class="cta-section">
+        <h2>Want to Join Our Community?</h2>
+        <p>Follow us on social media and stay updated with the latest leaderboard rankings!</p>
+        <% if (locals.isLoggedIn) { %>
+            <a href="/profile" class="btn btn-primary">Go to Profile</a>
         <% } else { %>
-            <p class="no-players">No featured players yet. Be the first!</p>
+            <a href="/register" class="btn btn-primary">Join Now</a>
         <% } %>
     </section>
 
-    <div class="cta-section">
-        <h2>Ready to Compete?</h2>
-        <p>Join our gaming community and climb the leaderboard!</p>
-        <% if (user) { %>
-            <a href="/leaderboard" class="cta-button">Go to Leaderboard</a>
-        <% } else { %>
-            <a href="/register" class="cta-button">Sign Up Now</a>
-            <a href="/login" class="cta-button secondary">Login</a>
-        <% } %>
-    </div>
+    <%- include('partials/footer', { 
+        user: locals.user || null,
+        isLoggedIn: locals.isLoggedIn || false 
+    }) %>
 
-    <%- include('partials/footer') %>
+    <script>
+        // Safe user avatar update
+        (function() {
+            try {
+                var userData = JSON.parse('<%- JSON.stringify(locals.user || {}) %>');
+                var navUser = document.querySelector('.nav-user');
+                
+                if (navUser && userData && userData.avatar) {
+                    var avatar = navUser.querySelector('img');
+                    if (avatar) {
+                        avatar.src = userData.avatar || '/images/default-avatar.jpg';
+                    }
+                    var usernameSpan = navUser.querySelector('span');
+                    if (usernameSpan && userData.username) {
+                        usernameSpan.textContent = userData.username;
+                    }
+                }
+            } catch (error) {
+                console.log('User info update:', error.message);
+            }
+        })();
+    </script>
 </body>
 </html>
