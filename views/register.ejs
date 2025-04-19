@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - GAMINGCORE</title>
+    <style>
+        /* Main Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #0f0f1a;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navbar Styles - Matching Your Site */
+        nav {
+            background: #1a1a2e;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: #e6e6e6;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .signup-btn {
+            background: #4cc9f0;
+            color: #0f0f1a;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* Form Container */
+        .container {
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            flex: 1;
+        }
+
+        h1 {
+            margin-bottom: 1.5rem;
+            color: #4cc9f0;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            background: #252538;
+            border: 1px solid #2a2a3a;
+            border-radius: 4px;
+            color: white;
+        }
+
+        button {
+            background: #4cc9f0;
+            color: #0f0f1a;
+            padding: 0.8rem;
+            width: 100%;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #3aa8d8;
+        }
+
+        .error {
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: rgba(255, 107, 107, 0.1);
+            border-radius: 4px;
+        }
+
+        p {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        a {
+            color: #4cc9f0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar with Correct Sign Up Link -->
+    <nav>
+        <a href="/" class="nav-brand">GAMINGCORE</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/leaderboard">Leaderboard</a>
+            <a href="/login">Login</a>
+            <a href="/register" class="signup-btn">Sign Up Free</a> <!-- Fixed link -->
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Create Account</h1>
+        <% if (error) { %>
+            <div class="error"><%= error %></div>
+        <% } %>
+        <form action="/register" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Sign Up Free</button>
+        </form>
+        <p>Already have an account? <a href="/login">Login</a></p>
+    </div>
+
+    <!-- Footer (optional) -->
+    <footer style="text-align: center; padding: 1.5rem; background: #1a1a2e; margin-top: auto;">
+        &copy; 2025 Game Leaderboard
+    </footer>
+</body>
+</html>

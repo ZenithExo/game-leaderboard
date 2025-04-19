@@ -1,14 +1,263 @@
-<!-- In views/leaderboard.ejs -->
-<tbody>
-    <% players.forEach((player, index) => { %>  <!-- Changed 'scores' to 'players' -->
-    <tr>
-        <td class="rank"><%= index + 1 %></td>
-        <td class="player">
-            <img src="<%= player.avatar || '/images/default-avatar.png' %>" alt="<%= player.username %>">
-            <%= player.username %>
-        </td>
-        <td class="score"><%= player.score || 0 %></td>
-        <td class="game">All</td> <!-- Default game filter -->
-    </tr>
-    <% }); %>
-</tbody>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAMINGCORE - Leaderboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --accent: #fd79a8;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a2e;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .navbar {
+            background-color: var(--dark);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .leaderboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .game-filters {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .filter-btn {
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active {
+            background: var(--primary);
+        }
+        
+        .leaderboard-section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(45, 52, 54, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: rgba(99, 110, 114, 0.2);
+        }
+        
+        tr:hover {
+            background-color: rgba(108, 92, 231, 0.2);
+        }
+        
+        .rank {
+            width: 60px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .player-cell {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .player-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .top-player {
+            background: linear-gradient(90deg, rgba(108,92,231,0.3), transparent);
+        }
+        
+        .top-player .rank {
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">GAMINGCORE</div>
+        <div class="nav-links">
+            <a href="/"><i class="fas fa-home"></i> Home</a>
+            <a href="/profile"><i class="fas fa-user"></i> Profile</a>
+            <a href="/leaderboard" class="active"><i class="fas fa-trophy"></i> Leaderboard</a>
+            <a href="/games"><i class="fas fa-gamepad"></i> Games</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="leaderboard-header">
+            <h1>Leaderboard</h1>
+            <div class="game-filters">
+                <button class="filter-btn active">All Games</button>
+                <button class="filter-btn">Call of Duty</button>
+                <button class="filter-btn">Fortnite</button>
+                <button class="filter-btn">Valorant</button>
+            </div>
+        </div>
+
+        <div class="leaderboard-section">
+            <h2 class="section-title">Top 10 Players</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="rank">#</th>
+                        <th>Player</th>
+                        <th>Score</th>
+                        <th>Game</th>
+                        <th>Last Active</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Top 10 Players -->
+                    <tr class="top-player">
+                        <td class="rank">1</td>
+                        <td class="player-cell">
+                            <img src="https://i.pinimg.com/736x/d0/71/13/d0711346830aa8621089c1f353686318.jpg" class="player-avatar">
+                            <span>BLΔZΞ</span>
+                        </td>
+                        <td>3,450</td>
+                        <td>All</td>
+                        <td>2 mins ago</td>
+                    </tr>
+                    <tr class="top-player">
+                        <td class="rank">2</td>
+                        <td class="player-cell">
+                            <img src="https://i.pinimg.com/236x/ee/f0/7d/eef07d19e76a3362102a0ce483d687a9.jpg" class="player-avatar">
+                            <span>Tomie</span>
+                        </td>
+                        <td>3,200</td>
+                        <td>Call of Duty</td>
+                        <td>5 mins ago</td>
+                    </tr>
+                    <!-- Add more top players (3-10) -->
+                    <tr>
+                        <td class="rank">3</td>
+                        <td class="player-cell">
+                            <img src="https://cdn.donmai.us/sample/c1/78/__yumemizuki_mizuki_genshin_impact_drawn_by_rei_sss35_ss3__sample-c178d6c1f50208d8f25407a9933308a1.jpg" class="player-avatar">
+                            <span>MizukiYume</span>
+                        </td>
+                        <td>3,150</td>
+                        <td>Valorant</td>
+                        <td>15 mins ago</td>
+                    </tr>
+                    <!-- Continue rows 4-10 similarly -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="leaderboard-section">
+            <h2 class="section-title">All Players</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="rank">#</th>
+                        <th>Player</th>
+                        <th>Score</th>
+                        <th>Game</th>
+                        <th>Last Active</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- All Players (11-100) -->
+                    <tr>
+                        <td class="rank">11</td>
+                        <td class="player-cell">
+                            <img src="https://cdna.artstation.com/p/assets/images/images/039/375/816/smaller_square/arno-sen-zhongli-morax.jpg?1625720437" class="player-avatar">
+                            <span>Morax</span>
+                        </td>
+                        <td>2,950</td>
+                        <td>Fortnite</td>
+                        <td>1 hour ago</td>
+                    </tr>
+                    <!-- Continue rows 12-100 similarly -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Simple filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // Here you would add actual filtering logic
+                console.log(`Filter by: ${btn.textContent}`);
+            });
+        });
+    </script>
+</body>
+</html>

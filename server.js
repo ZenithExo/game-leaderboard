@@ -153,6 +153,61 @@ app.get('/logout', (req, res) => {
     });
 });
 
+// Sign Up Routes - ADDED HERE
+app.get('/register', (req, res) => {
+    if (req.session.user) return res.redirect('/profile');
+    res.render('register', { 
+        error: null,
+        user: null,
+        isLoggedIn: false
+    });
+});
+
+app.post('/register', async (req, res) => {
+    try {
+        const { username, email, password } = req.body;
+        
+        // Check if user exists
+        const exists = await User.findOne({ email });
+        if (exists) {
+            return res.render('register', {
+                error: 'Email already registered',
+                user: null,
+                isLoggedIn: false
+            });
+        }
+
+        // Create user
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = await User.create({
+            username,
+            email,
+            password: hashedPassword,
+            score: 0,
+            avatar: '/images/default-avatar.jpg'
+        });
+
+        // Auto-login after registration
+        req.session.user = {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            avatar: user.avatar,
+            score: 0,
+            rank: 'Unranked'
+        };
+
+        res.redirect('/profile');
+    } catch (err) {
+        console.error('Registration error:', err);
+        res.render('register', {
+            error: 'Registration failed. Please try again.',
+            user: null,
+            isLoggedIn: false
+        });
+    }
+});
+
 // Profile Route
 app.get('/profile', requireLogin, async (req, res) => {
     try {
