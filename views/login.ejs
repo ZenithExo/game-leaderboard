@@ -4,21 +4,158 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GAMINGCORE - Login</title>
-    <link rel="stylesheet" href="/css/login.css">
-    <%- include('partials/navbar') %>
+    <style>
+        /* RESET & BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #0f0f1a;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* NAVBAR */
+        nav {
+            background: #1a1a2e;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: #e6e6e6;
+            text-decoration: none;
+        }
+        
+        .signup-btn {
+            background: #4cc9f0;
+            color: #0f0f1a;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* LOGO IMAGE - NOW CLOSER TO FORM */
+        .logo-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 1rem auto 0.5rem;
+            display: block;
+        }
+
+        /* LOGIN FORM */
+        .login-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 2rem 2rem;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .login-input {
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+
+        .login-input label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .login-input input {
+            width: 100%;
+            padding: 0.8rem;
+            background: #252538;
+            border: 1px solid #2a2a3a;
+            border-radius: 4px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 0.8rem;
+            background: #4cc9f0;
+            color: #0f0f1a;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin: 0.8rem 0;
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+
+        .sign-up {
+            text-align: center;
+            margin-top: 1rem;
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+
+        .sign-up a {
+            color: #4cc9f0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-brand">GAMINGCORE</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/leaderboard">Leaderboard</a>
+            <a href="/login">Login</a>
+            <a href="/register" class="signup-btn">Sign Up Free</a>
+        </div>
+    </nav>
+
+    <!-- LOGO IMAGE - NOW CLOSER TO FORM -->
+    <img src="https://i.pinimg.com/736x/2e/4e/32/2e4e325e91cdd85b86ae78dace760ecd.jpg" 
+         class="logo-img" 
+         alt="GAMINGCORE Logo">
+
+    <!-- LOGIN FORM -->
     <div class="login-container">
-        <img src="https://i.pinimg.com/736x/2e/4e/32/2e4e325e91cdd85b86ae78dace760ecd.jpg" class="login-logo" alt="Logo">
-
         <form action="/login" method="POST">
-            <% if (error) { %>
-                <div class="error-message"><%= error %></div>
-            <% } %>
-
             <div class="login-input">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="<%= email || '' %>" required>
+                <input type="email" id="email" name="email" required>
             </div>
 
             <div class="login-input">

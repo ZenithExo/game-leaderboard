@@ -1,26 +1,105 @@
 <nav class="navbar">
-    <div class="nav-left">
+    <div class="nav-brand">
         <a href="/" class="logo">GAMINGCORE</a>
     </div>
-    <div class="nav-center">
+    
+    <div class="nav-links">
         <a href="/">Home</a>
         <a href="/leaderboard">Leaderboard</a>
-        <% if (typeof user !== 'undefined' && user) { %>
+        <% if (isLoggedIn) { %>
             <a href="/profile">Profile</a>
         <% } else { %>
             <a href="/login">Login</a>
         <% } %>
     </div>
-    <div class="nav-right">
-        <% if (typeof user !== 'undefined' && user) { %>
-            <a href="/profile">
-                <img src="<%= user.avatar || 'https://i.pinimg.com/736x/2e/4e/32/2e4e325e91cdd85b86ae78dace760ecd.jpg' %>" 
+    
+    <div class="nav-actions">
+        <% if (isLoggedIn) { %>
+            <a href="/profile" class="user-profile">
+                <img src="<%= user.avatar || '/images/default-avatar.png' %>" 
                      alt="Profile" 
-                     class="nav-profile-pic">
+                     onerror="this.src='/images/default-avatar.png'">
+                <span><%= user.username || 'User' %></span>
             </a>
-            <a href="/logout" class="logout-link">Logout</a>
+            <a href="/logout" class="btn-logout">Logout</a>
         <% } else { %>
-            <a href="/login" class="login-link">Sign In</a>
+            <a href="/register" class="btn-signup">Sign Up Free</a>
         <% } %>
     </div>
 </nav>
+
+<style>
+    /* Navbar Styling */
+    .navbar {
+        position: fixed; /* Fix navbar to top */
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #1a1a2e;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        z-index: 1000; /* Ensure navbar stays above other content */
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 1.5rem;
+    }
+
+    .nav-links a {
+        color: #e6e6e6;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #4cc9f0;
+    }
+
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #fff;
+    }
+
+    .user-profile img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .btn-logout, .btn-signup {
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .btn-logout {
+        background: #f72585;
+        color: white;
+    }
+
+    .btn-signup {
+        background: #4cc9f0;
+        color: #1a1a2e;
+    }
+</style>

@@ -41,9 +41,8 @@ app.use(session({
     }
 }));
 
-// Global Template Variables Middleware - CRITICAL FIX
+// Global Template Variables Middleware
 app.use((req, res, next) => {
-    // Make these available in ALL templates
     res.locals.user = req.session.user || null;
     res.locals.isLoggedIn = !!req.session.user;
     next();
@@ -179,18 +178,21 @@ app.get('/profile', requireLogin, async (req, res) => {
     }
 });
 
-// Leaderboard Route
+// Fixed Leaderboard Route
 app.get('/leaderboard', async (req, res) => {
     try {
         const players = await User.find()
-            .sort({ score: -1 })
-            .limit(100)
-            .lean();
+            .sort({ score: -1 }) // Sort by score descending
+            .limit(100) // Top 100 players
+            .lean(); // Convert to plain JS objects
 
         res.render('leaderboard', {
-            players,
-            currentUser: req.session.user,
-            isLoggedIn: !!req.session.user
+            players: players || [], // Ensure array exists
+            currentUser: req.session.user || null,
+            isLoggedIn: !!req.session.user,
+            filters: {
+                games: ['All', 'Valorant', 'Call of Duty', 'Fortnite']
+            }
         });
     } catch (err) {
         console.error('Leaderboard error:', err);
@@ -202,7 +204,7 @@ app.get('/leaderboard', async (req, res) => {
 });
 
 // API Routes
-app.post('/api/scores', requireLogin, async (req, res) => {
+app.post('/models/scores', requireLogin, async (req, res) => {
     try {
         const { game, score } = req.body;
         

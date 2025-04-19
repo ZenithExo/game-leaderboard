@@ -1,89 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard | GAMINGCORE</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    <%- include('partials/navbar') %>
-
-    <main class="leaderboard-container">
-        <h1><i class="fas fa-trophy"></i> Global Leaderboard</h1>
-        
-        <div class="leaderboard-controls">
-            <div class="filter-section">
-                <label for="game-filter">Filter by Game:</label>
-                <select id="game-filter">
-                    <option value="all">All Games</option>
-                    <option value="valorant">Valorant</option>
-                    <option value="cod">Call of Duty</option>
-                    <option value="fortnite">Fortnite</option>
-                </select>
-            </div>
-            
-            <div class="search-section">
-                <input type="text" id="player-search" placeholder="Search players...">
-                <button id="search-btn"><i class="fas fa-search"></i></button>
-            </div>
-        </div>
-
-        <div class="leaderboard-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Player</th>
-                        <th>Game</th>
-                        <th>Score</th>
-                        <th>Badges</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% scores.forEach((score, index) => { %>
-                    <tr>
-                        <td class="rank"><%= index + 1 %></td>
-                        <td class="player">
-                            <img src="<%= score.userId.avatar %>" alt="<%= score.userId.username %>">
-                            <%= score.userId.username %>
-                        </td>
-                        <td class="game"><%= score.game.toUpperCase() %></td>
-                        <td class="score"><%= score.score %></td>
-                        <td class="badges">
-                            <% if (index === 0) { %>
-                                <i class="fas fa-crown gold" title="Top Player"></i>
-                            <% } %>
-                            <i class="fas fa-medal" title="Verified Player"></i>
-                        </td>
-                    </tr>
-                    <% }) %>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="pagination">
-            <button class="pagination-btn" disabled><i class="fas fa-chevron-left"></i></button>
-            <span class="page-number">1</span>
-            <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </main>
-
-    <%- include('partials/footer') %>
-
-    <script>
-        // Client-side filtering and search functionality
-        document.getElementById('game-filter').addEventListener('change', function() {
-            console.log('Filtering by:', this.value);
-            // Implement AJAX filtering or page reload with query params
-        });
-
-        document.getElementById('search-btn').addEventListener('click', function() {
-            const query = document.getElementById('player-search').value;
-            console.log('Searching for:', query);
-            // Implement player search functionality
-        });
-    </script>
-</body>
-</html>
+<!-- In views/leaderboard.ejs -->
+<tbody>
+    <% players.forEach((player, index) => { %>  <!-- Changed 'scores' to 'players' -->
+    <tr>
+        <td class="rank"><%= index + 1 %></td>
+        <td class="player">
+            <img src="<%= player.avatar || '/images/default-avatar.png' %>" alt="<%= player.username %>">
+            <%= player.username %>
+        </td>
+        <td class="score"><%= player.score || 0 %></td>
+        <td class="game">All</td> <!-- Default game filter -->
+    </tr>
+    <% }); %>
+</tbody>

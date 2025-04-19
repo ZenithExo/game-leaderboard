@@ -3,103 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found | GAMINGCORE</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>404 - GAMINGCORE</title>
     <style>
-        .error-container {
-            text-align: center;
-            padding: 5rem 2rem;
-            max-width: 800px;
-            margin: 0 auto;
+        /* RESET & BASE STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
         }
-        .error-code {
-            font-size: 8rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #3498db, #9b59b6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1rem;
-            line-height: 1;
-        }
-        .error-message {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: #ecf0f1;
-        }
-        .error-description {
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
-            color: #bdc3c7;
-            line-height: 1.6;
-        }
-        .error-actions {
+        
+        body {
+            background-color: #0f0f1a;
+            color: white;
+            min-height: 100vh;
             display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
+            flex-direction: column;
         }
-        .error-btn {
-            padding: 0.8rem 1.5rem;
+
+        /* NAVBAR (MATCHING OTHER PAGES) */
+        nav {
+            background: #1a1a2e;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: #e6e6e6;
+            text-decoration: none;
+        }
+        
+        .signup-btn {
+            background: #4cc9f0;
+            color: #0f0f1a;
+            padding: 0.5rem 1rem;
             border-radius: 4px;
             font-weight: bold;
             text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
+        }
+
+        /* 404 CONTENT */
+        .error-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 0.5rem;
+            text-align: center;
+            padding: 2rem;
         }
-        .error-btn-primary {
-            background-color: #3498db;
-            color: white;
+
+        .error-code {
+            font-size: 5rem;
+            color: #4cc9f0;
+            margin-bottom: 1rem;
         }
-        .error-btn-primary:hover {
-            background-color: #2980b9;
+
+        .error-message {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #4cc9f0;
+            color: #0f0f1a;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #4cc9f0;
+            border: 2px solid #4cc9f0;
+        }
+
+        .btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        .error-btn-secondary {
-            background-color: #2c3e50;
-            color: white;
-        }
-        .error-btn-secondary:hover {
-            background-color: #1a252f;
-            transform: translateY(-2px);
-        }
-        .pixel-character {
-            margin: 2rem auto;
-            width: 150px;
-            height: 150px;
-            background-image: url('https://i.pinimg.com/originals/0e/4b/fd/0e4bfdf5a7fdb5d9b5a3c8e5a7f254a0.gif');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            image-rendering: pixelated;
+
+        /* FOOTER (CENTERED) */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: #1a1a2e;
         }
     </style>
 </head>
-<body class="dark-theme">
-    <%- include('partials/navbar') %>
+<body>
+    <!-- NAVBAR (CONSISTENT WITH OTHER PAGES) -->
+    <nav>
+        <div class="nav-brand">GAMINGCORE</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/leaderboard">Leaderboard</a>
+            <a href="/login">Login</a>
+            <a href="/register" class="signup-btn">Sign Up Free</a>
+        </div>
+    </nav>
 
+    <!-- 404 CONTENT -->
     <div class="error-container">
-        <div class="pixel-character"></div>
-        <div class="error-code">404</div>
-        <h1 class="error-message">Level Not Found</h1>
-        <p class="error-description">
-            The page you're looking for has either been deleted, moved, or never existed.
-            <br>
-            Maybe you took a wrong turn in the dungeon? Let's get you back to safety.
-        </p>
-        <div class="error-actions">
-            <a href="/" class="error-btn error-btn-primary">
-                <i class="fas fa-home"></i> Return Home
-            </a>
-            <a href="/leaderboard" class="error-btn error-btn-secondary">
-                <i class="fas fa-trophy"></i> View Leaderboard
-            </a>
+        <h1 class="error-code">404</h1>
+        <h2 class="error-message">Level Not Found</h2>
+        <p>The page you're looking for has either been deleted, moved, or never existed.<br>
+        Maybe you took a wrong turn in the dungeon! Let's get you back to safety.</p>
+        
+        <div class="action-buttons">
+            <a href="/" class="btn btn-primary">Return Home</a>
+            <a href="/leaderboard" class="btn btn-secondary">View Leaderboard</a>
         </div>
     </div>
 
-    <%- include('partials/footer') %>
+    <!-- FOOTER -->
+    <footer>
+        &copy; 2025 Game Leaderboard
+    </footer>
 </body>
 </html>
