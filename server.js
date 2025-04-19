@@ -90,7 +90,7 @@ app.get('/', async (req, res) => {
     }
 });
 
-// Auth Routes
+// Enhanced Auth Routes
 app.get('/login', (req, res) => {
     if (req.session.user) return res.redirect('/profile');
     res.render('login', { 
@@ -104,8 +104,20 @@ app.get('/login', (req, res) => {
 app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = await User.findOne({ email });
+        
+        // Input validation
+        if (!email || !password) {
+            return res.render('login', {
+                error: 'Please provide both email and password',
+                email,
+                user: null,
+                isLoggedIn: false
+            });
+        }
 
+        // Find user with password field explicitly selected
+        const user = await User.findOne({ email }).select('+password +isActive');
+        
         if (!user) {
             return res.render('login', {
                 error: 'Invalid email or password',
@@ -115,6 +127,7 @@ app.post('/login', async (req, res) => {
             });
         }
 
+        // Password verification
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.render('login', {
@@ -125,13 +138,18 @@ app.post('/login', async (req, res) => {
             });
         }
 
+        // Update last active time
+        await User.findByIdAndUpdate(user._id, { lastActive: new Date() });
+
+        // Set session data
         req.session.user = {
             id: user._id,
             username: user.username,
             email: user.email,
             avatar: user.avatar || '/images/default-avatar.jpg',
             score: user.score || 0,
-            rank: user.rank || 'Unranked'
+            rank: user.rank || 'Unranked',
+            level: user.level || 1
         };
 
         res.redirect('/profile');
@@ -153,38 +171,74 @@ app.get('/logout', (req, res) => {
     });
 });
 
-// Sign Up Routes - ADDED HERE
+// Enhanced Register Routes
 app.get('/register', (req, res) => {
     if (req.session.user) return res.redirect('/profile');
     res.render('register', { 
         error: null,
         user: null,
-        isLoggedIn: false
+        isLoggedIn: false,
+        formData: {
+            username: '',
+            email: ''
+        }
     });
 });
 
 app.post('/register', async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const { username, email, password, confirmPassword } = req.body;
         
-        // Check if user exists
-        const exists = await User.findOne({ email });
-        if (exists) {
+        // Input validation
+        if (!username || !email || !password || !confirmPassword) {
             return res.render('register', {
-                error: 'Email already registered',
+                error: 'All fields are required',
                 user: null,
-                isLoggedIn: false
+                isLoggedIn: false,
+                formData: { username, email }
             });
         }
 
-        // Create user
-        const hashedPassword = await bcrypt.hash(password, 10);
+        if (password !== confirmPassword) {
+            return res.render('register', {
+                error: 'Passwords do not match',
+                user: null,
+                isLoggedIn: false,
+                formData: { username, email }
+            });
+        }
+
+        if (password.length < 8) {
+            return res.render('register', {
+                error: 'Password must be at least 8 characters',
+                user: null,
+                isLoggedIn: false,
+                formData: { username, email }
+            });
+        }
+
+        // Check if user exists
+        const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+        if (existingUser) {
+            return res.render('register', {
+                error: existingUser.email === email ? 'Email already registered' : 'Username already taken',
+                user: null,
+                isLoggedIn: false,
+                formData: { username, email }
+            });
+        }
+
+        // Create user with hashed password
+        const hashedPassword = await bcrypt.hash(password, 12);
         const user = await User.create({
             username,
             email,
             password: hashedPassword,
             score: 0,
-            avatar: '/images/default-avatar.jpg'
+            avatar: '/images/default-avatar.jpg',
+            recentGames: [],
+            completedGames: [],
+            friends: []
         });
 
         // Auto-login after registration
@@ -194,7 +248,8 @@ app.post('/register', async (req, res) => {
             email: user.email,
             avatar: user.avatar,
             score: 0,
-            rank: 'Unranked'
+            rank: 'Unranked',
+            level: 1
         };
 
         res.redirect('/profile');
@@ -203,7 +258,11 @@ app.post('/register', async (req, res) => {
         res.render('register', {
             error: 'Registration failed. Please try again.',
             user: null,
-            isLoggedIn: false
+            isLoggedIn: false,
+            formData: {
+                username: req.body.username || '',
+                email: req.body.email || ''
+            }
         });
     }
 });
@@ -211,7 +270,10 @@ app.post('/register', async (req, res) => {
 // Profile Route
 app.get('/profile', requireLogin, async (req, res) => {
     try {
-        const user = await User.findById(req.session.user.id).lean();
+        const user = await User.findById(req.session.user.id)
+            .populate('friends.userId', 'username avatar level isOnline')
+            .lean();
+
         if (!user) {
             req.session.destroy();
             return res.redirect('/login');
@@ -233,11 +295,11 @@ app.get('/profile', requireLogin, async (req, res) => {
     }
 });
 
-// FINAL FIXED LEADERBOARD ROUTE
+// Leaderboard Route
 app.get('/leaderboard', async (req, res) => {
     try {
         // Get top 100 players with only necessary fields
-        const players = await User.find({}, 'username avatar score')
+        const players = await User.find({}, 'username avatar score level achievements')
             .sort({ score: -1 })
             .limit(100)
             .lean();
@@ -248,6 +310,8 @@ app.get('/leaderboard', async (req, res) => {
             username: player.username || 'Anonymous',
             avatar: player.avatar || '/images/default-avatar.png',
             score: player.score || 0,
+            level: player.level || 1,
+            achievements: player.achievements || 0,
             game: 'All' // Default game filter
         }));
 
@@ -274,15 +338,21 @@ app.post('/models/scores', requireLogin, async (req, res) => {
     try {
         const { game, score } = req.body;
         
+        // Input validation
+        if (!game || isNaN(score)) {
+            return res.status(400).json({ error: 'Invalid game or score' });
+        }
+
         const newScore = await Score.create({
             user: req.session.user.id,
-            game: game || 'default',
-            score: parseInt(score) || 0
+            game: game,
+            score: parseInt(score)
         });
 
-        // Update user's total score
+        // Update user's total score and last activity
         await User.findByIdAndUpdate(req.session.user.id, {
-            $inc: { score: parseInt(score) || 0 }
+            $inc: { score: parseInt(score) },
+            lastActive: new Date()
         });
 
         res.status(201).json(newScore);
