@@ -6,27 +6,58 @@
     <title>About Us - Gaming Core</title>
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Added basic styles to prevent layout issues */
+        .about-container, .team-section, .cta-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .team-member {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
 </head>
-<body>
-    <%- include('partials/navbar') %>
+<body class="dark-theme">
+    <%- include('partials/navbar', { user: typeof user !== 'undefined' ? user : null }) %>
 
-    <div class="about-container">
+    <main class="about-container">
         <h1>About Gaming Core</h1>
         <p>Welcome to Gaming Core - your ultimate destination for competitive gaming! We are passionate about bringing gamers the best leaderboard tracking and gaming community features. Whether you're a casual or competitive player, we've got you covered.</p>
-    </div>
+    </main>
 
-    <div class="team-section">
+    <section class="team-section">
         <div class="team-member">
-            <img src="/images/aditya.jpg" alt="Developer">
+            <img src="/images/aditya.jpg" alt="Developer" onerror="this.src='/images/default-avatar.jpg'">
             <h3>Aditya Kumar Mishra</h3>
             <p>Lead Developer</p>
         </div>
-    </div>
+    </section>
 
-    <div class="cta-section">
+    <section class="cta-section">
         <h2>Want to Join Our Community?</h2>
         <p>Follow us on social media and stay updated with the latest leaderboard rankings!</p>
-        <a href="#">Join Now</a>
-    </div>
+        <a href="/register" class="btn btn-primary">Join Now</a>
+    </section>
+
+    <%- include('partials/footer') %>
+
+    <script>
+        // Ensure navbar user state is consistent
+        if (typeof user !== 'undefined' && user) {
+            const navUser = document.querySelector('.nav-user');
+            if (navUser) {
+                const avatar = navUser.querySelector('img');
+                if (avatar) avatar.src = '<%= user.avatar || "/images/default-avatar.jpg" %>';
+            }
+        }
+    </script>
 </body>
 </html>

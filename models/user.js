@@ -12,9 +12,10 @@ const userSchema = new mongoose.Schema({
     maxlength: [20, 'Username cannot exceed 20 characters'],
     validate: {
       validator: function(v) {
-        return /^[a-zA-Z0-9_]+$/.test(v);
+        // Allow letters, numbers, underscores, and dots
+        return /^[a-zA-Z0-9_.]+$/.test(v);
       },
-      message: 'Username can only contain letters, numbers, and underscores'
+      message: 'Username can only contain letters, numbers, underscores, and dots'
     }
   },
   email: {
@@ -31,9 +32,10 @@ const userSchema = new mongoose.Schema({
     select: false,
     validate: {
       validator: function(v) {
-        return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/.test(v);
+        // Simplified password validation (remove if too strict)
+        return /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(v);
       },
-      message: 'Password must contain at least one uppercase, one lowercase, one number, and one special character'
+      message: 'Password must contain at least one uppercase, one lowercase, and one number'
     }
   },
   avatar: {
@@ -41,9 +43,14 @@ const userSchema = new mongoose.Schema({
     default: 'https://i.pinimg.com/736x/2e/4e/32/2e4e325e91cdd85b86ae78dace760ecd.jpg',
     validate: {
       validator: function(v) {
-        return validator.isURL(v, { protocols: ['http','https'], require_protocol: true });
+        // Allow both absolute URLs and relative paths starting with /
+        if (v.startsWith('/')) return true;
+        return validator.isURL(v, { 
+          protocols: ['http','https'], 
+          require_protocol: true 
+        });
       },
-      message: 'Avatar must be a valid URL with http/https protocol'
+      message: 'Avatar must be a valid URL (http/https) or start with / for relative paths'
     }
   },
   level: {
@@ -92,9 +99,10 @@ const userSchema = new mongoose.Schema({
       required: [true, 'Game image is required'],
       validate: {
         validator: function(v) {
+          if (v.startsWith('/')) return true;
           return validator.isURL(v, { protocols: ['http','https'], require_protocol: true });
         },
-        message: 'Game image must be a valid URL with http/https protocol'
+        message: 'Game image must be a valid URL or start with /'
       }
     }
   }],
@@ -109,9 +117,10 @@ const userSchema = new mongoose.Schema({
       required: [true, 'Game image is required'],
       validate: {
         validator: function(v) {
+          if (v.startsWith('/')) return true;
           return validator.isURL(v, { protocols: ['http','https'], require_protocol: true });
         },
-        message: 'Game image must be a valid URL with http/https protocol'
+        message: 'Game image must be a valid URL or start with /'
       }
     }
   }],
@@ -136,9 +145,10 @@ const userSchema = new mongoose.Schema({
       default: 'https://i.pinimg.com/736x/2e/4e/32/2e4e325e91cdd85b86ae78dace760ecd.jpg',
       validate: {
         validator: function(v) {
+          if (v.startsWith('/')) return true;
           return validator.isURL(v, { protocols: ['http','https'], require_protocol: true });
         },
-        message: 'Friend avatar must be a valid URL with http/https protocol'
+        message: 'Friend avatar must be a valid URL or start with /'
       }
     }
   }],
